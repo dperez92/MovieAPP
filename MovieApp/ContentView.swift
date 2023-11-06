@@ -9,13 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        Text("Hello, world!")
+            .onAppear {
+                NetworkClient().getMoviesBy(search: "batman") { result in
+                    switch result {
+                    case .success(let movies):
+                        print(movies)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
     }
 }
 
